@@ -60,6 +60,24 @@ Zamiast tego, skopiuje wszystkie pliki konfiguracyjne i zależności transatywne
 
 Nie musisz nigdy używać `eject`. Zestaw funkcji jest odpowiedni dla małych i średnich wdrożeń, i nie powinieneś czuć się zobowiązany do korzystania z tej funkcji. Jednakże, rozumiemy, że to narzędzie nie byłoby użyteczne, gdybyś nie mógł go dostosować, gdy jesteś gotowy.
 
+## Uruchomienie z Docker Compose
+
+Aby uruchomić aplikację frontendową i backendową w kontenerach Docker, wykonaj w katalogu projektu:
+
+```bash
+docker-compose up --build
+```
+
+Po zbudowaniu i uruchomieniu:
+- Frontend dostępny jest pod: http://localhost:3000
+- Backend API pod: http://localhost:8080/api
+
+Aby zatrzymać i usunąć kontenery, użyj:
+
+```bash
+docker-compose down
+```
+
 ## Dowiedz się więcej
 
 Możesz dowiedzieć się więcej w [dokumentacji Create React App](https://facebook.github.io/create-react-app/docs/getting-started).
