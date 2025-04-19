@@ -1,69 +1,44 @@
-## Opis zadania
-Należy stworzyć aplikację kliencką wykorzystując bibliotekę React.js.
-W ramach projektu należy stworzyć trzy komponenty: Produkty, Koszyk
-oraz Płatności. Koszyk oraz Płatności powinny wysyłać do aplikacji
-serwerowej dane, a w Produktach powinniśmy pobierać dane o produktach
-z aplikacji serwerowej. Aplikacja serwera w jednym z trzech języków:
-Kotlin, Scala, Go. Dane pomiędzy wszystkimi komponentami powinny być
-przesyłane za pomocą React hooks.
+## Opis
+Należy stworzyć 20 przypadków testowych w jednym z rozwiązań:
 
-## Wymagania projektu
-* ✅ 3.0 W ramach projektu należy stworzyć dwa komponenty: Produkty oraz
-Płatności; Płatności powinny wysyłać do aplikacji serwerowej dane, a w
-Produktach powinniśmy pobierać dane o produktach z aplikacji
-serwerowej;
-* ✅ 3.5 Należy dodać Koszyk wraz z widokiem; należy wykorzystać routing
-* ✅ 4.0 Dane pomiędzy wszystkimi komponentami powinny być przesyłane za pomocą React hooks
-* ✅ 4.5 Należy dodać skrypt uruchamiający aplikację serwerową oraz kliencką na dockerze via docker-compose
-* ✅ 5.0 Należy wykorzystać axios’a oraz dodać nagłówki pod CORS
+- Cypress JS (JS)
+- Selenium (Kotlin, Python, Java, JS, Go, Scala)
 
-## Wymagania techniczne
-- Node.js >= 16.x i npm
-- Go >= 1.20 (jeśli aplikacja uruchamiana bez dockera)
-- Docker i Docker Compose
+Testy mają w sumie zawierać minimum 50 asercji (3.5). Mają również
+uruchamiać się na platformie Browserstack (5.0). Proszę pamiętać o
+stworzeniu darmowego konta via https://education.github.com/pack.
 
-## Struktura projektu
+* ✅ 3.0 Należy stworzyć 20 przypadków testowych w CypressJS lub Selenium (Kotlin, Python, Java, JS, Go, Scala)
+* ❌ 3.5 Należy rozszerzyć testy funkcjonalne, aby zawierały minimum 50 asercji
+* ❌ 4.0 Należy stworzyć testy jednostkowe do wybranego wcześniejszego projektu z minimum 50 asercjami
+* ❌ 4.5 Należy dodać testy API, należy pokryć wszystkie endpointy z minimum jednym scenariuszem negatywnym per endpoint
+* ❌ 5.0 Należy uruchomić testy funkcjonalne na Browserstacku
+
+## Wymagania
+- Node.js >=14
+- npm
+- Darmowe konto BrowserStack (do testów CI)
+
+## Instalacja
 ```bash
-react_ecommerce/
-├── Dockerfile                # Frontend React
-├── docker-compose.yml        # Docker Compose config
-├── server/
-│   ├── Dockerfile            # Backend Go
-│   ├── go.mod                # Moduł Go
-│   └── main.go               # Serwer API
-├── src/
-│   ├── components/
-│   │   ├── Products/Products.js
-│   │   ├── Cart/Cart.js
-│   │   └── Payments/Payments.js
-│   ├── context/
-│   │   └── CartContext.js
-│   ├── data/
-│   │   └── sampleProducts.js
-│   ├── App.js
-│   └── index.js
-├── package.json
-├── package-lock.json
-└── README.md
+npm install
 ```
 
-## Konfiguracja środowiska
-Aplikacja frontendowa używa zmiennej `REACT_APP_API_URL` ustawionej domyślnie na `http://localhost:8080/api`. Jeśli aplikacja jest uruchamiana za pomocą Docker Compose, nie trzeba nic zmieniać.
-Jeśli aplikacja uruchamia backend lokalnie, należy się upewnić, że serwer Go działa na porcie 8080.
+## Uruchamianie testów E2E lokalnie
+- `npx cypress open`
+- `npx cypress run`
 
-## Uruchomienie przez Docker Compose
-
-Aby uruchomić aplikację frontendową i backendową w kontenerach Docker, wykonaj w katalogu projektu:
-
-```bash
-docker-compose up --build
+## Uruchamianie testów na BrowserStack
+1. Zarejestruj się na BrowserStack i pobierz `BROWSERSTACK_USERNAME` i `BROWSERSTACK_ACCESS_KEY`.
+2. Dodaj do `cypress.json` lub ustaw jako zmienne środowiskowe:
+```json
+{
+  "env": {
+    "BROWSERSTACK_USERNAME": "<username>",
+    "BROWSERSTACK_ACCESS_KEY": "<access_key>"
+  }
+}
 ```
-
-Po zbudowaniu i uruchomieniu:
-- Frontend dostępny jest pod: http://localhost:3000
-- Backend API pod: http://localhost:8080/api
-
-Aby zatrzymać i usunąć kontenery, użyj:
-
+3. Uruchom:
 ```bash
-docker-compose down
+npx cypress run --browser chrome --record --key $BROWSERSTACK_ACCESS_KEY
