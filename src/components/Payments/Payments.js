@@ -100,12 +100,12 @@ const Payments = () => {
                     {cartItems.map(item => (
                         <div key={item.id} className="cart-item">
                             <span>{item.name}</span>
-                            <span>${item.price}</span>
+                            <span>{item.price} PLN</span>
                         </div>
                     ))}
                     <div className="total">
                         <span>Suma:</span>
-                        <span>${cartItems.reduce((sum, item) => sum + item.price, 0)}</span>
+                        <span>{cartItems.reduce((sum, item) => sum + item.price, 0)} PLN</span>
                     </div>
                 </div>
 
