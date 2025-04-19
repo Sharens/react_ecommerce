@@ -171,4 +171,78 @@ describe('React E-commerce App', () => {
     cy.url().should('eq', `${Cypress.config().baseUrl}/`);
   });
 
+  it('verifies product card details structure', () => {
+    cy.get('.product-card').should('have.length', 4).each((card) => {
+      cy.wrap(card).within(() => {
+        cy.get('h3').should('be.visible');
+        cy.get('h3').should('not.be.empty');
+        cy.get('p.description').should('exist');
+        cy.get('p.description').should('not.be.empty');
+        cy.get('.price').should('contain', 'PLN');
+        cy.get('img').should('have.attr', 'src');
+        cy.get('img').should('match', /\/images\//);
+        cy.get('button.add-to-cart-btn').should('exist');
+        cy.get('button.add-to-cart-btn').then($btn => {
+          if (!$btn.prop('disabled')) {
+            cy.wrap($btn).should('contain', 'Dodaj do koszyka');
+          } else {
+            cy.wrap($btn).should('contain', 'Niedostępny');
+          }
+        });
+      });
+    });
+  });
+
+  it('verifies cart page UI elements', () => {
+    cy.get('.product-card').first().find('button').click();
+    cy.get('.product-card').eq(1).find('button').click();
+    cy.contains('Koszyk').click();
+    cy.get('.cart-container').should('exist');
+    cy.get('.cart-header').should('contain', 'Koszyk');
+    cy.get('.cart-item').should('have.length', 2).each(item => {
+      cy.wrap(item).find('h4').should('be.visible');
+      cy.wrap(item).find('.item-price').should('match', /\d+ PLN/);
+      cy.wrap(item).find('button.remove-item-btn').should('exist');
+    });
+    cy.get('.cart-summary .total-label').should('exist');
+    cy.get('.cart-summary .total-value').should('match', /\d+ PLN/);
+  });
+
+  it('verifies navigation link attributes', () => {
+    cy.get('.app-nav a').should('have.length', 2);
+    cy.get('.app-nav a').first().should('have.attr', 'href', '/');
+    cy.get('.app-nav a').eq(1).should('have.attr', 'href', '/cart');
+  });
+
+  it('verifies fixture data integrity', () => {
+    cy.fixture('products.json').then(products => {
+      expect(products).to.have.length(4);
+      expect(products[0]).to.have.all.keys('id', 'name', 'price', 'description', 'available');
+      expect(typeof products[0].available).to.eq('boolean');
+    });
+  });
+
+  it('direct visit to cart loads empty cart', () => {
+    cy.visit('/cart');
+    cy.get('.cart-container').should('exist');
+    cy.contains('Twój koszyk jest pusty.').should('exist');
+  });
+
+  it('retains cart items on page reload', () => {
+    cy.get('.product-card').first().find('button').click();
+    cy.contains('Koszyk').click();
+    cy.reload();
+    cy.get('.cart-item').should('have.length', 1);
+    cy.url().should('include', '/cart');
+  });
+
+  it('verifies payment form fields placeholders', () => {
+    cy.get('.product-card').first().find('button').click();
+    cy.contains('Koszyk').click();
+    cy.get('select').should('exist');
+    cy.get('input[placeholder="1234 5678 9012 3456"]')
+      .should('exist');
+    cy.get('input[placeholder="MM/RR"]').should('exist');
+    cy.get('input[placeholder="123"]').should('exist');
+  });
 });
