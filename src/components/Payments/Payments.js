@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../../api';
 import { useCart } from '../../context/CartContext';
 
 const Payments = () => {
@@ -23,7 +23,7 @@ const Payments = () => {
 
         setLoading(true);
         try {
-            const response = await axios.post('http://localhost:8080/api/payments', {
+            const response = await api.post('/payments', {
                 paymentMethod,
                 cardNumber,
                 cardExpiry,

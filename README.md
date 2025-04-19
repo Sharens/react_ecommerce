@@ -15,7 +15,7 @@ serwerowej;
 * ✅ 3.5 Należy dodać Koszyk wraz z widokiem; należy wykorzystać routing
 * ✅ 4.0 Dane pomiędzy wszystkimi komponentami powinny być przesyłane za pomocą React hooks
 * ✅ 4.5 Należy dodać skrypt uruchamiający aplikację serwerową oraz kliencką na dockerze via docker-compose
-* ❌ 5.0 Należy wykorzystać axios’a oraz dodać nagłówki pod CORS
+* ✅ 5.0 Należy wykorzystać axios’a oraz dodać nagłówki pod CORS
 
 ## Wymagania techniczne
 - Node.js >= 16.x i npm
